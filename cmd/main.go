@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/didsqq/todo-app"
-	"github.com/didsqq/todo-app/pkg/handler"
-	"github.com/didsqq/todo-app/pkg/repository"
-	"github.com/didsqq/todo-app/pkg/service"
+	smartmed "github.com/didsqq/SmartMed_monitoring_system"
+	"github.com/didsqq/SmartMed_monitoring_system/pkg/handler"
+	"github.com/didsqq/SmartMed_monitoring_system/pkg/repository"
+	"github.com/didsqq/SmartMed_monitoring_system/pkg/service"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -32,7 +32,7 @@ func main() {
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
-	srv := new(todo.Server)
+	srv := new(smartmed.Server)
 
 	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		logrus.Fatalf("error occured while running http server: %s", err.Error())

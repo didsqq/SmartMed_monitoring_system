@@ -1,4 +1,4 @@
-package models
+package smartmed
 
 import "time"
 
