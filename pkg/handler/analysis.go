@@ -3,13 +3,13 @@ package handler
 import (
 	"net/http"
 
-	models "github.com/didsqq/SmartMed_monitoring_system"
+	smartmed "github.com/didsqq/SmartMed_monitoring_system"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *Handler) createAnalysis(c *gin.Context) {
 	var userId int
-	var input models.Analysis
+	var input smartmed.Analysis
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
