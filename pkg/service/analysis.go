@@ -16,3 +16,11 @@ func NewAnalysisService(repo repository.Analysis) *AnalysisService {
 func (s *AnalysisService) Create(userId int, analysis smartmed.Analysis) (int, error) {
 	return s.repo.Create(userId, analysis)
 }
+
+func (s *AnalysisService) GetAll() ([]smartmed.Analysis, error) {
+	return s.repo.GetAll()
+}
+
+func (s *AnalysisService) GetById(analysisiId int) (smartmed.Analysis, error) {
+	return s.repo.GetById(analysisiId)
+}

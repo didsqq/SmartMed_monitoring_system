@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	smartmed "github.com/didsqq/SmartMed_monitoring_system"
 	"github.com/gin-gonic/gin"
@@ -26,11 +27,27 @@ func (h *Handler) createAnalysis(c *gin.Context) {
 }
 
 func (h *Handler) getAllAnalysis(c *gin.Context) {
+	analysis, err := h.services.Analysis.GetAll()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
 
+	c.JSON(http.StatusOK, analysis)
 }
 
 func (h *Handler) getAnalysisById(c *gin.Context) {
 
+	analysisId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid analysis id param")
+	}
+
+	analysis, err := h.services.Analysis.GetById(analysisId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(http.StatusOK, analysis)
 }
 
 func (h *Handler) updateAnalysis(c *gin.Context) {

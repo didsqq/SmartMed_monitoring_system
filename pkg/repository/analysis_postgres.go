@@ -25,3 +25,17 @@ func (r *AnalysisPostgres) Create(userId int, analysis smartmed.Analysis) (int, 
 
 	return id, nil
 }
+
+func (r *AnalysisPostgres) GetAll() ([]smartmed.Analysis, error) {
+	var analysis []smartmed.Analysis
+	getAllQuery := fmt.Sprintf("SELECT * FROM %s", analysisTable)
+	err := r.db.Select(&analysis, getAllQuery)
+	return analysis, err
+}
+
+func (r *AnalysisPostgres) GetById(analysisiId int) (smartmed.Analysis, error) {
+	var analysis smartmed.Analysis
+	getByIdQuery := fmt.Sprintf("SELECT * FROM %s WHERE id=$1", analysisTable)
+	err := r.db.Get(&analysis, getByIdQuery, analysisiId)
+	return analysis, err
+}
