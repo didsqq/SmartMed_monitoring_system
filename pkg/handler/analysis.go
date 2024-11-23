@@ -37,7 +37,7 @@ func (h *Handler) getAllAnalysis(c *gin.Context) {
 
 func (h *Handler) getAnalysisById(c *gin.Context) {
 
-	analysisId, err := strconv.Atoi(c.Param("id"))
+	analysisId, err := strconv.Atoi(c.Param("analysis_id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid analysis id param")
 	}
@@ -48,12 +48,4 @@ func (h *Handler) getAnalysisById(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, analysis)
-}
-
-func (h *Handler) updateAnalysis(c *gin.Context) {
-
-}
-
-func (h *Handler) deleteAnalysis(c *gin.Context) {
-
 }

@@ -24,13 +24,18 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api", h.userIdentity)
 	{
-		lists := api.Group("/analysis")
+		patients := api.Group("patients")
 		{
-			lists.POST("/", h.createAnalysis)
-			lists.GET("/", h.getAllAnalysis)
-			lists.GET("/:id", h.getAnalysisById)
-			lists.PUT("/:id", h.updateAnalysis)
-			lists.DELETE("/:id", h.deleteAnalysis)
+			patients.POST("/", h.createPatients)
+			patients.GET("/", h.getAllPatients)
+			patients.GET("/:patient_id", h.getPatientsById)
+
+			analysis := patients.Group(":patient_id/analysis")
+			{
+				analysis.POST("/", h.createAnalysis)
+				analysis.GET("/", h.getAllAnalysis)
+				analysis.GET("/:analysis_id", h.getAnalysisById)
+			}
 		}
 	}
 

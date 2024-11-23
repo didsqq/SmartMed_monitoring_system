@@ -6,6 +6,9 @@ import (
 )
 
 type Authorization interface {
+	CreateDoctor(smartmed.Doctor) (int, error)
+	GenerateToken(username, password string) (string, error)
+	ParseToken(accesToken string) (int, error)
 }
 
 type Analysis interface {
@@ -14,13 +17,21 @@ type Analysis interface {
 	GetById(analysisiId int) (smartmed.Analysis, error)
 }
 
+type Patients interface {
+	Create(userId int, patinet smartmed.Patient) (int, error)
+	GetAll(userId int) ([]smartmed.Patient, error)
+}
+
 type Service struct {
 	Authorization
 	Analysis
+	Patients
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		Analysis: NewAnalysisService(repos.Analysis),
+		Analysis:      NewAnalysisService(repos.Analysis),
+		Authorization: NewAuthService(repos.Authorization),
+		Patients:      NewPatientsService(repos.Patients),
 	}
 }

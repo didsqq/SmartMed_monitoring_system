@@ -3,3 +3,4 @@ go get -u github.com/spf13/viper
 go get -u github.com/jmoiron/sqlx
 go get -u github.com/sirupsen/logrus
 go get -u github.com/dgrijalva/jwt-gogt
+go get -u github.com/dgrijalva/jwt-go
