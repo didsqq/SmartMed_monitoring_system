@@ -14,11 +14,12 @@ CREATE TABLE patients
     doctor_id int,
     fullname varchar(255) not null,
     date_of_birth date,
-    gender VARCHAR(10),
+    gender VARCHAR(30),
     address varchar(255),
     email varchar(255) not null,
-    phone_number char(10) not null,
+    phone_number char(30) not null,
     password_hash varchar(255) not null,
+    chatId varchar(255),
     foreign key(doctor_id) references doctors(id) on delete cascade
 );
 

@@ -12,13 +12,15 @@ type Authorization interface {
 
 type Analysis interface {
 	Create(userId int, analysis smartmed.Analysis) (int, error)
-	GetAll() ([]smartmed.Analysis, error)
+	GetAll(patientId int) ([]smartmed.Analysis, error)
 	GetById(analysisiId int) (smartmed.Analysis, error)
 }
 
 type Patients interface {
 	Create(userId int, patinet smartmed.Patient) (int, error)
 	GetAll(userId int) ([]smartmed.Patient, error)
+	GetById(userId int) (smartmed.Patient, error)
+	GetChatId(patientId int) (string, error)
 }
 
 type Repository struct {

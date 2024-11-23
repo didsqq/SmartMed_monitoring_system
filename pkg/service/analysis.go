@@ -17,8 +17,8 @@ func (s *AnalysisService) Create(userId int, analysis smartmed.Analysis) (int, e
 	return s.repo.Create(userId, analysis)
 }
 
-func (s *AnalysisService) GetAll() ([]smartmed.Analysis, error) {
-	return s.repo.GetAll()
+func (s *AnalysisService) GetAll(patientId int) ([]smartmed.Analysis, error) {
+	return s.repo.GetAll(patientId)
 }
 
 func (s *AnalysisService) GetById(analysisiId int) (smartmed.Analysis, error) {

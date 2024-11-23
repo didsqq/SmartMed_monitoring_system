@@ -11,5 +11,6 @@ type Patient struct {
 	Address      string    `json:"address" db:"address"`
 	Email        string    `json:"email" db:"email"`
 	PhoneNumber  string    `json:"phone_number" db:"phone_number"`
+	ChatId       string    `json:"chatid" db:"chatid"`
 	PasswordHash string    `json:"password" db:"password_hash"`
 }

@@ -10,12 +10,12 @@ import (
 func (h *Handler) signUp(c *gin.Context) {
 	var input smartmed.Doctor
 
-	if err := c.BindJSON(&input); err != nil { // gin автоматически связывает json данные из тела запроса с переменной input
+	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	id, err := h.services.Authorization.CreateDoctor(input) // метод для создания пользователя
+	id, err := h.services.Authorization.CreateDoctor(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

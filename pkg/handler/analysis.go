@@ -29,11 +29,15 @@ func (h *Handler) createAnalysis(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 
+	chatid, err := h.services.Patients.GetChatId(input.PatientId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, fmt.Sprintf("failed getchatid%s", err.Error()))
+	}
 	message := fmt.Sprintf("pulse: %d,\nRespiratoryRate: %d,\nOxygenSaturation: %f,\nSystolicBloodPressure: %d,\nDiastolicBloodPressure: %d,\nHeartRate: %d,\nAnalysisTimestamp: %s", input.Pulse, input.RespiratoryRate, input.OxygenSaturation, input.SystolicBloodPressure, input.DiastolicBloodPressure, input.HeartRate, input.AnalysisTimestamp)
 	// Отправка POST-запроса на bot
 	botURL := "https://api.telegram.org/bot7951143788:AAFPuqecSG-VVeM6IwavsdWmU9oV5W7-wKg/sendMessage"
 	msg := Message{
-		ChatID: "1357553243",
+		ChatID: chatid, // Преобразуем int в string
 		Text:   message,
 	}
 	jsonData, err := json.Marshal(msg)
@@ -54,7 +58,12 @@ func (h *Handler) createAnalysis(c *gin.Context) {
 }
 
 func (h *Handler) getAllAnalysis(c *gin.Context) {
-	analysis, err := h.services.Analysis.GetAll()
+	patientId, err := strconv.Atoi(c.Param("patient_id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid patientId id param")
+		return
+	}
+	analysis, err := h.services.Analysis.GetAll(patientId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
