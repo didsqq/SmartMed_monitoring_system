@@ -39,5 +39,22 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 	}
 
+	// fanzil := router.Group("fanzil")
+	// {
+	// 	patients := fanzil.Group("patients")
+	// 	{
+	// 		patients.POST("/", h.createPatients)
+	// 		patients.GET("/", h.getAllPatients)
+	// 		patients.GET("/:patient_id", h.getPatientsById)
+
+	// 		analysis := patients.Group(":patient_id/analysis")
+	// 		{
+	// 			analysis.POST("/", h.createAnalysis)
+	// 			analysis.GET("/", h.getAllAnalysis)
+	// 			analysis.GET("/:analysis_id", h.getAnalysisById)
+	// 		}
+	// 	}
+	// }
+
 	return router
 }

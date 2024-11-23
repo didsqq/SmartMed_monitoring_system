@@ -29,9 +29,9 @@ func (h *Handler) createPatients(c *gin.Context) {
 	})
 }
 
-type getAllPatientsResponse struct {
-	Data []smartmed.Patient `json:"data"`
-}
+// type getAllPatientsResponse struct {
+// 	Data []smartmed.Patient `json:"data"`
+// }
 
 func (h *Handler) getAllPatients(c *gin.Context) {
 	userId, err := getUserId(c)
@@ -45,9 +45,10 @@ func (h *Handler) getAllPatients(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, getAllPatientsResponse{
-		Data: patients,
-	})
+	// c.JSON(http.StatusOK, getAllPatientsResponse{
+	// 	patients,
+	// })
+	c.JSON(http.StatusOK, patients)
 }
 
 func (h *Handler) getPatientsById(c *gin.Context) {

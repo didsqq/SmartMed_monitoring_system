@@ -14,7 +14,6 @@ func NewPatientsService(repo repository.Patients) *PatientsService {
 }
 
 func (s *PatientsService) GetAll(userId int) ([]smartmed.Patient, error) {
-	// patinet.PasswordHash = s.generatePasswordHash(patinet.PasswordHash)
 	return s.repo.GetAll(userId)
 }
 
