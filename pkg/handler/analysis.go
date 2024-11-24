@@ -33,8 +33,13 @@ func (h *Handler) createAnalysis(c *gin.Context) {
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, fmt.Sprintf("failed getchatid%s", err.Error()))
 	}
-	message := fmt.Sprintf("pulse: %d,\nRespiratoryRate: %d,\nOxygenSaturation: %f,\nSystolicBloodPressure: %d,\nDiastolicBloodPressure: %d,\nHeartRate: %d,\nAnalysisTimestamp: %s", input.Pulse, input.RespiratoryRate, input.OxygenSaturation, input.SystolicBloodPressure, input.DiastolicBloodPressure, input.HeartRate, input.AnalysisTimestamp)
-	// Отправка POST-запроса на bot
+	var message string
+	if input.Pulse == 0 {
+		message = fmt.Sprintf("pulse: %d,\nRespiratoryRate: %d,\nOxygenSaturation: %f,\nSystolicBloodPressure: %d,\nDiastolicBloodPressure: %d,\nHeartRate: %d,\nAnalysisTimestamp: %s\n\n\nВы умираете, вызовите скорую ", input.Pulse, input.RespiratoryRate, input.OxygenSaturation, input.SystolicBloodPressure, input.DiastolicBloodPressure, input.HeartRate, input.AnalysisTimestamp)
+	} else {
+		message = fmt.Sprintf("pulse: %d,\nRespiratoryRate: %d,\nOxygenSaturation: %f,\nSystolicBloodPressure: %d,\nDiastolicBloodPressure: %d,\nHeartRate: %d,\nAnalysisTimestamp: %s\n\n\nВаш показатель находится в нормальном диапазоне. Это говорит о хорошем состоянии сердечно-сосудистой системы в состоянии покоя.\nВаш показатель находится в пределах нормы. Это свидетельствует о нормальной функции легких.\nВаш показатель превосходный. Это указывает на хорошее насыщение крови кислородом.\nВаше кровяное давление идеально и соответствует нормам.Рекомендация: Поддерживайте оптимальный вес, избегайте чрезмерного потребления соли, алкоголя и жирной пищи.\nВаш показатель в норме, что указывает на стабильную работу сердечной мышцы.Рекомендация: Сохраняйте умеренную физическую активность, например, прогулки или плавание.", input.Pulse, input.RespiratoryRate, input.OxygenSaturation, input.SystolicBloodPressure, input.DiastolicBloodPressure, input.HeartRate, input.AnalysisTimestamp)
+	}
+
 	botURL := "https://api.telegram.org/bot7951143788:AAFPuqecSG-VVeM6IwavsdWmU9oV5W7-wKg/sendMessage"
 	msg := Message{
 		ChatID: chatid, // Преобразуем int в string
@@ -47,7 +52,7 @@ func (h *Handler) createAnalysis(c *gin.Context) {
 	}
 	resp, err := http.Post(botURL, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, "Failed to send data to Flask: "+err.Error())
+		newErrorResponse(c, http.StatusInternalServerError, "Failed to send data to bot: "+err.Error())
 		return
 	}
 	defer resp.Body.Close()
